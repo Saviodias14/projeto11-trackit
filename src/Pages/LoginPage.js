@@ -1,96 +1,73 @@
+import axios from 'axios'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
+import { Link, useNavigate } from 'react-router-dom'
+import { ThreeDots } from 'react-loader-spinner'
 import logo from '../assets/logo.png'
-
+import Form from '../styles/Form'
+import url from '../components/url.js'
+import styled from 'styled-components'
 
 
 export default function LoginPage() {
-    const [loginData, setLoginData] = useState({email:'', password:''})
+    const [loginData, setLoginData] = useState({ email: '', password: '' })
+    const [disabled, setDisabled] = useState(false)
+    const navigate = useNavigate()
 
-    function handleChange(e){
+    function handleChange(e) {
         setLoginData({ ...loginData, [e.target.name]: e.target.value })
     }
 
+    function login(e) {
+        setDisabled(true)
+        e.preventDefault()
+        axios.post(`${url}login`, { ...loginData })
+            .then(res => {
+                console.log(res.data)
+                setDisabled(false)
+                navigate('/hoje')
+            })
+            .catch(err => {
+                alert(err.response.data.message)
+                setDisabled(false)
+            })
+    }
     return (
-        <Container>
-            <img src={logo} />
-            <form>
-                <input onChange={handleChange}
-                    value={loginData.email}
-                    name='email'
-                    type='email'
-                    placeholder='email'
-                    required />
-                <input onChange={handleChange}
-                    value={loginData.password}
-                    name='password'
-                    type='password'
-                    placeholder='senha'
-                    required />
-                <button type='submit'>Entrar</button>
-            </form>
-            <Link>Não tem uma conta? Cadastre-se!</Link>
-        </Container>
+            <Container>
+            <Form />
+                <img src={logo} />
+                <form onSubmit={login}>
+                    <input onChange={handleChange}
+                        value={loginData.email}
+                        name='email'
+                        type='email'
+                        placeholder='email'
+                        disabled={disabled}
+                        required />
+                    <input onChange={handleChange}
+                        value={loginData.password}
+                        name='password'
+                        type='password'
+                        placeholder='senha'
+                        disabled={disabled}
+                        required />
+                    <button type='submit'
+                        disabled={!(loginData.email && loginData.password) || disabled}
+                    >{disabled ? <ThreeDots
+                        height="80"
+                        width="80"
+                        radius="9"
+                        color="#fff"
+                        ariaLabel="three-dots-loading"
+                        wrapperStyle={{}}
+                        wrapperClassName=""
+                        visible={true} /> : 'Entrar'}</button>
+                </form>
+                <Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
+            </Container>
     )
 }
 const Container = styled.div`
 display:flex;
 flex-direction:column;
 padding: 0 36px;
-img{
-    width:180px;
-    margin:68px auto 32px auto;
-}
-form{
-    display:flex;
-    flex-direction:column;
-    align-items: center;
-    justify-content: space-between;
-}
-input{
-    width: 100%;
-    height:45px;
-    background: #FFFFFF;
-    border: 1px solid #D5D5D5;
-    border-radius: 5px;
-    margin-bottom: 6px;
-    font-family: 'Lexend Deca';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 25px;
-    color: #333;
-    padding: 0 11px;
-    box-sizing: border-box;
-    &::placeholder{
-        color: #DBDBDB;
-    }
-}
-button{
-    width:100%;
-    height:45px;
-    background: #52B6FF;
-    border-radius: 5px;
-    font-family: 'Lexend Deca';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20.976px;
-    line-height: 26px;
-    text-align: center;
-    color: #FFFFFF;
-    margin-bottom:25px;
-}
-a{
-    font-family: 'Lexend Deca';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 13.976px;
-    line-height: 17px;
-    text-align: center;
-    text-decoration-line: underline;
-    color: #52B6FF;
-
-
-}
 `

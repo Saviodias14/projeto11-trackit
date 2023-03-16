@@ -37,42 +37,46 @@ export default function LoginPage() {
             })
     }
     return (
-            <Container>
+        <Container>
+            <img src={logo} />
             <Form />
-                <img src={logo} />
-                <form onSubmit={login}>
-                    <input onChange={handleChange}
-                        value={loginData.email}
-                        name='email'
-                        type='email'
-                        placeholder='email'
-                        disabled={disabled}
-                        required />
-                    <input onChange={handleChange}
-                        value={loginData.password}
-                        name='password'
-                        type='password'
-                        placeholder='senha'
-                        disabled={disabled}
-                        required />
-                    <button type='submit'
-                        disabled={!(loginData.email && loginData.password) || disabled}
-                    >{disabled ? <ThreeDots
-                        height="80"
-                        width="80"
-                        radius="9"
-                        color="#fff"
-                        ariaLabel="three-dots-loading"
-                        wrapperStyle={{}}
-                        wrapperClassName=""
-                        visible={true} /> : 'Entrar'}</button>
-                </form>
-                <Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
-            </Container>
+            <form onSubmit={login}>
+                <input onChange={handleChange}
+                    value={loginData.email}
+                    name='email'
+                    type='email'
+                    placeholder='email'
+                    disabled={disabled}
+                    required />
+                <input onChange={handleChange}
+                    value={loginData.password}
+                    name='password'
+                    type='password'
+                    placeholder='senha'
+                    disabled={disabled}
+                    required />
+                <button type='submit'
+                    disabled={!(loginData.email && loginData.password) || disabled}
+                >{disabled ? <ThreeDots
+                    height="80"
+                    width="80"
+                    radius="9"
+                    color="#fff"
+                    ariaLabel="three-dots-loading"
+                    wrapperStyle={{}}
+                    wrapperClassName=""
+                    visible={true} /> : 'Entrar'}</button>
+            </form>
+            <Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
+        </Container>
     )
 }
 const Container = styled.div`
 display:flex;
 flex-direction:column;
 padding: 0 36px;
+img{
+    width:180px;
+    margin:68px auto 32px auto;
+}
 `

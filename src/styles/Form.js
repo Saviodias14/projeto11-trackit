@@ -43,10 +43,6 @@ button{
     align-items: center;
     justify-content:center;
 }
-img{
-    width:180px;
-    margin:68px auto 32px auto;
-}
 a{
     font-family: 'Lexend Deca';
     font-style: normal;

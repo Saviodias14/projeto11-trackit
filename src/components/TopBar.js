@@ -16,6 +16,7 @@ display:flex;
 align-items:center;
 justify-content:space-between;
 padding:0 18px;
+box-sizing:border-box;
 width:100%;
 height:70px;
 box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
@@ -33,7 +34,6 @@ h1{
 img{
     width:51px;
     height: 51px;
-    margin-right:30px;
     border-radius:98px;
 }
 `

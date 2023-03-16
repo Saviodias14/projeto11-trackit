@@ -32,8 +32,8 @@ export default function RegisterPage() {
     }
     return (
         <Container>
-            <Form />
             <img src={logo} />
+            <Form />
             <form onSubmit={register}>
                 <input onChange={handleChange}
                     value={registerData.email}
@@ -84,4 +84,8 @@ const Container = styled.div`
 display:flex;
 flex-direction:column;
 padding: 0 36px;
+img{
+    width:180px;
+    margin:68px auto 32px auto;
+}
 `

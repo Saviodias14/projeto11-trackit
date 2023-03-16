@@ -1,4 +1,5 @@
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 export default function BottonBar() {
     return (
@@ -28,12 +29,12 @@ export default function BottonBar() {
                     },
                 }}
                 >
-                    <p>Hoje</p>
+                    <Link to='/hoje'><p>Hoje</p></Link>
                 </CircularProgressbarWithChildren>
             </ProgressContent>
             <Botton>
-                <p>Hábitos</p>
-                <p>Histórico</p>
+                <Link to='/habitos'><p>Hábitos</p></Link>
+                <Link to='/historico'><p>Histórico</p></Link>
             </Botton>
         </>
     )
@@ -59,6 +60,9 @@ p{
     text-align: center;
     color: #52B6FF;
 }
+a{
+    text-decoration:none;
+}
 `
 const ProgressContent = styled.div`
 width: 91px;
@@ -76,5 +80,8 @@ p{
     text-align: center;
     color: #FFFFFF;
     margin-bottom:10px;
+}
+a{
+    text-decoration:none;
 }
 `

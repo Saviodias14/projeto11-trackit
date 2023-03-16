@@ -5,6 +5,7 @@ import RegisterPage from "./Pages/RegisterPage";
 import TodayPage from "./Pages/TodayPage/TodayPage";
 import token from "./constants/token";
 import image from './constants/image.js'
+import HabitPage from "./Pages/HabitPage/HabitPage";
 function App() {
   const [request, setRequest] = useState('')
   const [picture, setPicture] = useState('')
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" element={<LoginPage />} />
             <Route path="/cadastro" element={<RegisterPage />} />
             <Route path="/hoje" element={<TodayPage />} />
+            <Route path="/habitos" element={<HabitPage/>}/>
           </Routes>
         </BrowserRouter>
       </token.Provider>

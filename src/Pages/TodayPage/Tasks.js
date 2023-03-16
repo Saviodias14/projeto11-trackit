@@ -1,7 +1,7 @@
 import check from '../../assets/check.png'
 import styled from 'styled-components'
 
-export default function Tasks() {
+export default function Tasks({habitList}) {
     return (
         <Task>
             <h1>Ler 1 capítulo de livro</h1>

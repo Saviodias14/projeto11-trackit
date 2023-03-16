@@ -2,6 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 const Form = createGlobalStyle`
 form{
+    width:100%;
     display:flex;
     flex-direction:column;
     align-items: center;

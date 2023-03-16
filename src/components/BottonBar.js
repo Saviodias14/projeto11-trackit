@@ -1,16 +1,10 @@
-import { useState, useContext, useEffect } from "react"
-import styled from "styled-components"
-import token from '../constants/token.js'
-import TopBar from '../components/TopBar.js'
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
-
-export default function TodayPage() {
-    const [request, setRequest] = useContext(token)
+import styled from 'styled-components';
+export default function BottonBar() {
     return (
-        <Container>
-            <TopBar />
+        <>
             <ProgressContent>
-                <CircularProgressbarWithChildren value={75} background={true} backgroundPadding={7} strokeWidth={9}styles={{
+                <CircularProgressbarWithChildren value={75} background={true} backgroundPadding={7} strokeWidth={9} styles={{
                     path: {
                         stroke: `white`,
                         strokeLinecap: 'round',
@@ -30,29 +24,21 @@ export default function TodayPage() {
                     },
                     background: {
                         fill: '#52B6FF',
-                        width:'30px',
+                        width: '30px',
                     },
                 }}
                 >
                     <p>Hoje</p>
                 </CircularProgressbarWithChildren>
             </ProgressContent>
-            <BottonBar>
+            <Botton>
                 <p>Hábitos</p>
                 <p>Histórico</p>
-            </BottonBar>
-        </Container>
+            </Botton>
+        </>
     )
 }
-const Container = styled.div`
-background-color:#F2F2F2;
-height:100vh;
-display:flex;
-flex-direction: column;
-padding:70px 0;
-box-sizing:border-box;
-`
-const BottonBar = styled.div`
+const Botton = styled.div`
 background-color:white;
 width:100%;
 height:70px;

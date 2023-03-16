@@ -2,7 +2,7 @@ import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./Pages/LoginPage";
 import RegisterPage from "./Pages/RegisterPage";
-import TodayPage from "./Pages/TodayPage";
+import TodayPage from "./Pages/TodayPage/TodayPage";
 import token from "./constants/token";
 import image from './constants/image.js'
 function App() {

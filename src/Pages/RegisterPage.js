@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import axios from 'axios';
-import url from '../components/url.js';
+import url from '../constants/url.js';
 import { ThreeDots } from 'react-loader-spinner';
 
 export default function RegisterPage() {

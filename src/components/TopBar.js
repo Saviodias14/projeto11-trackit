@@ -4,7 +4,7 @@ import { useContext } from "react"
 export default function TopBar() {
     const [picture, setPicture] = useContext(image)
     return (
-        <Top>
+        <Top data-test='header'>
             <h1>TrackIt</h1>
             <img src={picture} />
         </Top>

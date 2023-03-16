@@ -13,8 +13,8 @@ export default function Day({habitList}) {
     
     return (
         <Container>
-            <h1>{weekDay[0].toUpperCase() + weekDay.substring(1)}</h1>
-            <h2>Nenhum hábito concluído ainda</h2>
+            <h1 data-test='today'>{weekDay[0].toUpperCase() + weekDay.substring(1)}</h1>
+            <h2 data-test='today-counter'>Nenhum hábito concluído ainda</h2>
         </Container>
     )
 }

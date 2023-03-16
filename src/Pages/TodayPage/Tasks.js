@@ -1,13 +1,13 @@
 import check from '../../assets/check.png'
 import styled from 'styled-components'
 
-export default function Tasks({habitList}) {
+export default function Tasks({ habitList }) {
     return (
-        <Task>
-            <h1>Ler 1 capítulo de livro</h1>
-            <p>Sequência atual: 3 dias
-                <br />Seu recorde: 5 dias</p>
-            <div>
+        <Task data-test='today-habit-container'>
+            <h1 data-test='today-habit-name'>Ler 1 capítulo de livro</h1>
+            <p data-test='today-habit-sequence'>Sequência atual: 3 dias</p>
+            <p data-test='today-habit-record'>Seu recorde: 5 dias</p>
+            <div data-test='today-habit-check-btn'>
                 <img src={check} />
             </div>
         </Task>

@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 export default function BottonBar() {
     return (
-        <>
-            <ProgressContent>
+        <div data-test='menu'>
+            <ProgressContent data-test='today-link'>
                 <CircularProgressbarWithChildren value={75} background={true} backgroundPadding={7} strokeWidth={9} styles={{
                     path: {
                         stroke: `white`,
@@ -33,10 +33,10 @@ export default function BottonBar() {
                 </CircularProgressbarWithChildren>
             </ProgressContent>
             <Botton>
-                <Link to='/habitos'><p>Hábitos</p></Link>
-                <Link to='/historico'><p>Histórico</p></Link>
+                <Link data-test='habit-link' to='/habitos'><p>Hábitos</p></Link>
+                <Link data-test='history-link' to='/historico'><p>Histórico</p></Link>
             </Botton>
-        </>
+        </div>
     )
 }
 const Botton = styled.div`

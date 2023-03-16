@@ -35,35 +35,35 @@ export default function RegisterPage() {
             <img src={logo} />
             <Form />
             <form onSubmit={register}>
-                <input onChange={handleChange}
+                <input data-test='email-input' onChange={handleChange}
                     value={registerData.email}
                     name='email'
                     type='email'
                     placeholder='email'
                     disabled={disabled}
                     required />
-                <input onChange={handleChange}
+                <input data-test='password-input' onChange={handleChange}
                     value={registerData.password}
                     name='password'
                     type='password'
                     placeholder='senha'
                     disabled={disabled}
                     required />
-                <input onChange={handleChange}
+                <input data-test='user-name-input' onChange={handleChange}
                     value={registerData.name}
                     name='name'
                     type='text'
                     placeholder='nome'
                     disabled={disabled}
                     required />
-                <input onChange={handleChange}
+                <input data-test='user-image-input' onChange={handleChange}
                     value={registerData.image}
                     name='image'
                     type='url'
                     placeholder='foto'
                     disabled={disabled}
                     required />
-                <button type='submit'
+                <button data-test='signup-btn' type='submit'
                     disabled={!(registerData.email && registerData.password && registerData.image && registerData.name) || disabled}>{disabled ?
                         <ThreeDots
                             height="80"
@@ -76,7 +76,7 @@ export default function RegisterPage() {
                             visible={true}
                         /> : 'Cadastrar'}</button>
             </form>
-            <Link to="/">Já tem uma conta? Faça login!!</Link>
+            <Link data-test='login-link' to="/">Já tem uma conta? Faça login!!</Link>
         </Container>
     )
 }

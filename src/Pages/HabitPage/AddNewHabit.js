@@ -6,18 +6,18 @@ export default function AddNewHabit(){
         <Container>
                 <AddHabit>
                     <h1>Meus Hábitos</h1>
-                    <button>+</button>
+                    <button data-test='habit-create-btn'>+</button>
                 </AddHabit>
-                <CreateHabit>
+                <CreateHabit data-test='habit-create-container'>
                     <Form />
                     <form>
-                        <input placeholder="nome do habito" />
+                        <input data-test='habit-name-input' placeholder="nome do habito" />
                         <DayList>
-                            {dayList.map((d) => <button type='button'>{d}</button>)}
+                            {dayList.map((d) => <button data-test='habit-day' type='button'>{d}</button>)}
                         </DayList>
                         <Send>
-                            <button type='button'>Cancelar</button>
-                            <button type='submit'>Salvar</button>
+                            <button data-test='habit-create-cancel-btn' type='button'>Cancelar</button>
+                            <button data-test='habit-create-save-btn' type='submit'>Salvar</button>
                         </Send>
                     </form>
                 </CreateHabit>

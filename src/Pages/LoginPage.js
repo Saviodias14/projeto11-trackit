@@ -41,21 +41,21 @@ export default function LoginPage() {
             <img src={logo} />
             <Form />
             <form onSubmit={login}>
-                <input onChange={handleChange}
+                <input data-test='email-input' onChange={handleChange}
                     value={loginData.email}
                     name='email'
                     type='email'
                     placeholder='email'
                     disabled={disabled}
                     required />
-                <input onChange={handleChange}
+                <input data-test='password-input' onChange={handleChange}
                     value={loginData.password}
                     name='password'
                     type='password'
                     placeholder='senha'
                     disabled={disabled}
                     required />
-                <button type='submit'
+                <button data-test='login-btn' type='submit'
                     disabled={!(loginData.email && loginData.password) || disabled}
                 >{disabled ? <ThreeDots
                     height="80"
@@ -67,7 +67,7 @@ export default function LoginPage() {
                     wrapperClassName=""
                     visible={true} /> : 'Entrar'}</button>
             </form>
-            <Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
+            <Link data-test='signup-link' to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
         </Container>
     )
 }

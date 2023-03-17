@@ -1,32 +1,99 @@
 import Form from "../../styles/Form"
 import styled from "styled-components"
-const dayList = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
-export default function AddNewHabit(){
-    return(
+import dayList from '../../constants/dayList.js'
+import { useState, useContext } from "react"
+import { ThreeDots } from 'react-loader-spinner'
+import axios from "axios"
+import url from "../../constants/url"
+import token from "../../constants/token"
+export default function AddNewHabit({ setAtualization, atualization }) {
+    const [request, setRequest] = useContext(token)
+    const [showAddHabit, setShowAddHabit] = useState(false)
+    const [disabled, setDisabled] = useState(false)
+    const [name, setName] = useState('')
+    const [days, setDays] = useState([])
+
+    function clickedDay(i) {
+        if (days.includes(i)) {
+            const newArray = days.filter((e) => e !== i)
+            setDays(newArray)
+        } else {
+            const newArray = [...days, i]
+            setDays(newArray)
+        }
+    }
+
+    function handleForm(e) {
+        e.preventDefault()
+        if (days.length>0) {
+            setDisabled(true)
+            const config = { headers: { Authorization: `Bearer ${request}` } }
+            const body = { name, days }
+            axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', body, config)
+                .then((res) => {
+                    console.log(res.data)
+                    setShowAddHabit(false)
+                    setDays([])
+                    setName('')
+                    setDisabled(false)
+                    setAtualization([...atualization, res.data])
+                })
+                .catch((err) => {
+                    alert(err.response.data)
+                    console.log(err.response)
+                    setDisabled(false)
+                })
+        }else{
+            alert('Selecione algum dia da semana')
+        }
+    }
+    return (
         <Container>
-                <AddHabit>
-                    <h1>Meus Hábitos</h1>
-                    <button data-test='habit-create-btn'>+</button>
-                </AddHabit>
-                <CreateHabit data-test='habit-create-container'>
-                    <Form />
-                    <form>
-                        <input data-test='habit-name-input' placeholder="nome do habito" />
-                        <DayList>
-                            {dayList.map((d) => <button data-test='habit-day' type='button'>{d}</button>)}
-                        </DayList>
-                        <Send>
-                            <button data-test='habit-create-cancel-btn' type='button'>Cancelar</button>
-                            <button data-test='habit-create-save-btn' type='submit'>Salvar</button>
-                        </Send>
-                    </form>
-                </CreateHabit>
-            </Container>
+            <AddHabit>
+                <h1>Meus Hábitos</h1>
+                <button data-test='habit-create-btn' onClick={() => setShowAddHabit(true)}>+</button>
+            </AddHabit>
+            <CreateHabit data-test='habit-create-container' show={showAddHabit}>
+                <Form />
+                <form onSubmit={handleForm} >
+                    <input data-test='habit-name-input'
+                        placeholder="nome do habito"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        disabled={disabled}
+                        required />
+                    <DayList>
+                        {dayList.map((d, i) => <ButtonDay
+                            key={i}
+                            data-test='habit-day'
+                            clicked={days.includes(i)}
+                            onClick={() => clickedDay(i)}
+                            type='button'
+                        >{d}</ButtonDay>)}
+                    </DayList>
+                    <Send>
+                        <button data-test='habit-create-cancel-btn' type='button' onClick={() => {
+                            setShowAddHabit(false)
+                            setDays([])
+                            setName('')
+                        }} disabled={disabled}>Cancelar</button>
+                        <button data-test='habit-create-save-btn' type='submit' disabled={disabled}>{disabled ? <ThreeDots
+                            height="80"
+                            width="80"
+                            radius="9"
+                            color="#fff"
+                            ariaLabel="three-dots-loading"
+                            wrapperStyle={{}}
+                            wrapperClassName=""
+                            visible={true} /> : 'Salvar'}</button>
+                    </Send>
+                </form>
+            </CreateHabit>
+        </Container>
     )
 }
 const Container = styled.div`
 background-color:#F2F2F2;
-height:100vh;
 display:flex;
 flex-direction: column;
 padding:0 18px;
@@ -69,7 +136,7 @@ const CreateHabit = styled.div`
 width:100%;
 height:180px;
 background-color:white;
-display:flex;
+display:${props => props.show ? 'flex' : 'none'};
 margin-top:28px;
 padding:18px;
 box-sizing:border-box;  
@@ -82,10 +149,6 @@ justify-content:left;
 button{
     width: 30px;
     height: 30px;
-    left: 104px;
-    top: 218px;
-    background: #FFFFFF;
-    border: 1px solid #D5D5D5;
     border-radius: 5px;
     margin-right:4px; 
     font-family: 'Lexend Deca';
@@ -93,8 +156,12 @@ button{
     font-weight: 400;
     font-size: 19.976px;
     line-height: 25px;
-    color: #DBDBDB;
 }
+`
+const ButtonDay = styled.button`
+background-color: ${props => props.clicked ? '#CFCFCF' : '#FFFFFF'};
+border: 1px solid ${props => props.clicked ? '#CFCFCF' : '#D5D5D5'};
+color: ${props => props.clicked ? '#fff' : '#DBDBDB'};
 `
 const Send = styled.div`
 width:100%;

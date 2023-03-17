@@ -39,7 +39,7 @@ export default function LoginPage() {
     return (
         <Container>
             <img src={logo} />
-            <Form />
+            <Form disabled={disabled}/>
             <form onSubmit={login}>
                 <input data-test='email-input' onChange={handleChange}
                     value={loginData.email}

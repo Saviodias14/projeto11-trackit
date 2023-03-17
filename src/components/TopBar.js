@@ -23,6 +23,7 @@ box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 position:fixed;
 left:0;
 top:0;
+z-index:10;
 h1{
     font-family: 'Playball';
     font-style: normal;

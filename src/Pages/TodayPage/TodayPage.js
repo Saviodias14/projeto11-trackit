@@ -19,7 +19,7 @@ export default function TodayPage() {
             console.log(res.data)
         })
         .catch((err)=>{
-            alert(err.response.data)
+            console.log(err.response.data)
         })
         
     },[])

@@ -33,7 +33,7 @@ export default function RegisterPage() {
     return (
         <Container>
             <img src={logo} />
-            <Form />
+            <Form disabled={disabled}/>
             <form onSubmit={register}>
                 <input data-test='email-input' onChange={handleChange}
                     value={registerData.email}

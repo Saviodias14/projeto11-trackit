@@ -11,7 +11,7 @@ form{
 input{
     width: 100%;
     height:45px;
-    background: #FFFFFF;
+    background-color: ${props=>props.disabled?'#F2F2F2':'#FFFFFF'};
     border: 1px solid #D5D5D5;
     border-radius: 5px;
     margin-bottom: 6px;
@@ -30,7 +30,8 @@ input{
 button{
     width:100%;
     height:45px;
-    background: #52B6FF;
+    background-color: #52B6FF;
+    opacity:${props=>props.disabled?'0.7':'1'};
     border-radius: 5px;
     font-family: 'Lexend Deca';
     font-style: normal;

@@ -6,40 +6,52 @@ import BottonBar from "../../components/BottonBar.js"
 import Day from "./Day.js"
 import Tasks from "./Tasks.js"
 import axios from "axios"
-import url from "../../constants/url.js"
+import percentual from "../../constants/percent.js"
 
 export default function TodayPage() {
     const [request, setRequest] = useContext(token)
     const [habitList, setHabitList] = useState([])
+    const [checkedList, setCheckedList] = useState(true)
+    const [percent, setPercent] =useContext(percentual)
+    console.log(percent)
     useEffect(()=>{
         const config = { headers: { Authorization: `Bearer ${request}` } }
-        axios.get(`${url}today`, config)
+        axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today`, config)
         .then((res)=>{
             setHabitList(res.data)
+            setPercent((res.data.filter((l)=>l.done)).length/res.data.length)
             console.log(res.data)
         })
         .catch((err)=>{
             console.log(err.response.data)
         })
         
-    },[])
+    },[checkedList])
     return (
         <>
             <TopBar />
             <Container>
                 <Day habitList={habitList}/>
-                <Tasks habitList={habitList} />
+                {habitList.map((o)=>
+                <Tasks key={o.id}
+                setCheckedList={setCheckedList}
+                checkedList={checkedList} 
+                name={o.name} 
+                sequence={o.currentSequence} 
+                record={o.highestSequence} 
+                done={o.done}
+                id={o.id}/>)}
             </Container>
-            <BottonBar />
+            <BottonBar/>
         </>
     )
 }
 const Container = styled.div`
 background-color:#F2F2F2;
-height:100vh;
+min-height:100vh;
 display:flex;
 flex-direction: column;
-padding:70px 18px;
+padding:70px 18px 130px 18px;
 box-sizing:border-box;
 `
 

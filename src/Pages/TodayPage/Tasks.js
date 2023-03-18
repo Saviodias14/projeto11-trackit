@@ -1,12 +1,45 @@
 import check from '../../assets/check.png'
 import styled from 'styled-components'
+import { useContext, useState } from 'react'
+import token from '../../constants/token'
+import axios from 'axios'
 
-export default function Tasks({ habitList }) {
+export default function Tasks({ name, sequence, record, done, id, setCheckedList, checkedList }) {
+    const [request, setRequest] = useContext(token)
+    const [disabled, setDisabled] = useState(done)
+    const config = { headers: { Authorization: `Bearer ${request}` } }
+    function checkTask() {
+        if (done) {
+            setDisabled(false)
+            axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, '', config)
+                .then((res) => {
+                    console.log(res.data)
+                    checkedList?setCheckedList(false):setCheckedList(true)
+                })
+                .catch((err) => {
+                    console.log(err.response.data.message)
+                })
+        } else {
+            setDisabled(true)
+            axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, '', config)
+                .then((res) => {
+                    console.log(res.data)
+                    checkedList?setCheckedList(false):setCheckedList(true)
+                })
+                .catch((err) => {
+                    console.log(err.response.data.message)
+                })
+        }
+    }
     return (
-        <Task data-test='today-habit-container'>
-            <h1 data-test='today-habit-name'>Ler 1 capítulo de livro</h1>
-            <p data-test='today-habit-sequence'>Sequência atual: 3 dias</p>
-            <p data-test='today-habit-record'>Seu recorde: 5 dias</p>
+        <Task data-test='today-habit-container'
+            onClick={checkTask}
+            done={disabled}
+            sequence={sequence}
+            record={record}>
+            <h1 data-test='today-habit-name'>{name}</h1>
+            <p data-test='today-habit-sequence'>Sequência atual: <span>{sequence} dias</span></p>
+            <p data-test='today-habit-record'>Seu recorde: {record} dias</p>
             <div data-test='today-habit-check-btn'>
                 <img src={check} />
             </div>
@@ -44,7 +77,7 @@ p{
     color: #666666;
 }
 div{
-    background: #EBEBEB;
+    background: ${props => props.done ? '#8FC549' : '#EBEBEB'};
     border: 1px solid #E7E7E7;
     border-radius: 5px;
     width:69px;
@@ -55,5 +88,8 @@ div{
     display:flex;
     align-items:center;
     justify-content:center;
+}
+span{
+    color:${props=>props.sequence>0 && props.sequence>=props.record ?'#8FC549':'#666666'};
 }
 `

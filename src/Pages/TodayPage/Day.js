@@ -1,20 +1,22 @@
 import styled from "styled-components"
 import dayjs from "dayjs"
 import 'dayjs/locale/pt-br.js'
-import { useState } from "react"
+import { useContext, useState } from "react"
+import percentual from "../../constants/percent"
 
-export default function Day({habitList}) {
+export default function Day() {
+    const [percent, usePercent] = useContext(percentual)
     const [weekDay, setWeekDay] = useState(dayjs().locale('pt-br').format('dddd, DD/MM'))
 
         setTimeout(()=>{
-            setWeekDay(dayjs().locale('pt-br').format('Dddd, DD/MM'))
+            setWeekDay(dayjs().locale('pt-br').format('dddd, DD/MM'))
         },60000)
     console.log(weekDay)
     
     return (
-        <Container>
+        <Container percent={percent}>
             <h1 data-test='today'>{weekDay[0].toUpperCase() + weekDay.substring(1)}</h1>
-            <h2 data-test='today-counter'>Nenhum hábito concluído ainda</h2>
+            <h2 data-test='today-counter'>{percent<=0?'Nenhum hábito concluído ainda':`${percent*100}% dos hábitos concluídos`}</h2>
         </Container>
     )
 }
@@ -34,6 +36,6 @@ h2{
     font-weight: 400;
     font-size: 18px;
     line-height: 22px;
-    color: #BABABA;
+    color: ${props=>props.percent>0?'#8FC549':'#BABABA'};
 }
 `

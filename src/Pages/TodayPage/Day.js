@@ -10,13 +10,12 @@ export default function Day({habitList}) {
 
         setTimeout(()=>{
             setWeekDay(dayjs().locale('pt-br').format('dddd, DD/MM'))
-        },60000)
-    console.log(weekDay)
+        },1000)
     
     return (
         <Container percent={percent}>
             <h1 data-test='today'>{weekDay[0].toUpperCase() + weekDay.substring(1)}</h1>
-            <h2 data-test='today-counter'>{habitList.length<1?'Nenhum hábito concluído ainda':`${percent*100}% dos hábitos concluídos`}</h2>
+            <h2 data-test='today-counter'>{percent>0?`${percent*100}% dos hábitos concluídos`:'Nenhum hábito concluído ainda'}</h2>
         </Container>
     )
 }

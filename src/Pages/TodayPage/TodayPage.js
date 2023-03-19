@@ -13,6 +13,7 @@ export default function TodayPage() {
     const [request, setRequest] = useContext(token)
     const [habitList, setHabitList] = useState([])
     const [checkedList, setCheckedList] = useState(true)
+    const [doneTasks, setDoneTasks] = useState(0)
     const [percent, setPercent] = useContext(percentual)
     const [atualization, setAtualization] = useContext(att)
     console.log(percent)
@@ -21,11 +22,8 @@ export default function TodayPage() {
         axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today`, config)
             .then((res) => {
                 setHabitList(res.data)
-                setPercent(((res.data.filter((l) => l.done)).length / res.data.length).toFixed(2))
-                console.log(res.data)
-            })
-            .catch((err) => {
-                console.log(err.response.data)
+                setPercent(res.data.length?(doneTasks/res.data.length).toFixed(2):0)
+                setDoneTasks((res.data.filter((l) => l.done)).length)
             })
 
     }, [checkedList, atualization])
@@ -38,6 +36,8 @@ export default function TodayPage() {
                     <Tasks key={o.id}
                         setCheckedList={setCheckedList}
                         checkedList={checkedList}
+                        doneTasks={doneTasks}
+                        setDoneTasks={setDoneTasks}
                         o={o} />)}
             </Container>
             <BottonBar />

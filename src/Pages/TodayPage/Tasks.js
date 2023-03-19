@@ -3,45 +3,37 @@ import styled from 'styled-components'
 import { useContext, useState } from 'react'
 import token from '../../constants/token'
 import axios from 'axios'
+import percentual from '../../constants/percent'
 
-export default function Tasks({ o, setCheckedList, checkedList}) {
+export default function Tasks({ o, setCheckedList, checkedList, setDoneTasks, doneTasks}) {
     const [request, setRequest] = useContext(token)
-    const [disabled, setDisabled] = useState(o.done)
+    const [percent, setPercent] = useContext(percentual)
     const config = { headers: { Authorization: `Bearer ${request}` } }
-    console.log(o)
+    
     function checkTask() {
         if (o.done) {
-            setDisabled(false)
+            setDoneTasks(doneTasks-1)
             axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${o.id}/uncheck`, '', config)
                 .then((res) => {
-                    console.log(res.data)
-                    checkedList?setCheckedList(false):setCheckedList(true)
-                })
-                .catch((err) => {
-                    console.log(err.response.data.message)
+                    checkedList ? setCheckedList(false) : setCheckedList(true)
                 })
         } else {
-            setDisabled(true)
+            setDoneTasks(doneTasks+1)
             axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${o.id}/check`, '', config)
                 .then((res) => {
-                    console.log(res.data)
-                    checkedList?setCheckedList(false):setCheckedList(true)
-                })
-                .catch((err) => {
-                    console.log(err.response.data.message)
+                    checkedList ? setCheckedList(false) : setCheckedList(true)
                 })
         }
     }
     return (
         <Task data-test='today-habit-container'
-            onClick={checkTask}
-            done={disabled}
+            done={o.done}
             sequence={o.currentSequence}
             record={o.highestSequence}>
             <h1 data-test='today-habit-name'>{o.name}</h1>
             <p data-test='today-habit-sequence'>Sequência atual: <span>{o.currentSequence} dias</span></p>
             <p data-test='today-habit-record'>Seu recorde: {o.highestSequence} dias</p>
-            <div data-test='today-habit-check-btn'>
+            <div onClick={checkTask} data-test='today-habit-check-btn'>
                 <img src={check} />
             </div>
         </Task>
@@ -91,6 +83,6 @@ div{
     justify-content:center;
 }
 span{
-    color:${props=>(props.sequence>0 && props.sequence>=props.record)||props.done ?'#8FC549':'#666666'};
+    color:${props => (props.sequence > 0 && props.sequence >= props.record) || props.done ? '#8FC549' : '#666666'};
 }
 `

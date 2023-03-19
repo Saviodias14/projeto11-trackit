@@ -16,6 +16,7 @@ export default function Habits() {
             .then((res) => {
                 console.log(res.data)
                 setMyHabits(res.data)
+                setAtualization(res.data)
             })
             .catch((err) => alert(err.response.data))
     }, [atualization])

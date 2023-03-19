@@ -7,42 +7,40 @@ import Day from "./Day.js"
 import Tasks from "./Tasks.js"
 import axios from "axios"
 import percentual from "../../constants/percent.js"
+import att from "../../constants/atualization.js"
 
 export default function TodayPage() {
     const [request, setRequest] = useContext(token)
     const [habitList, setHabitList] = useState([])
     const [checkedList, setCheckedList] = useState(true)
-    const [percent, setPercent] =useContext(percentual)
+    const [percent, setPercent] = useContext(percentual)
+    const [atualization, setAtualization] = useContext(att)
     console.log(percent)
-    useEffect(()=>{
+    useEffect(() => {
         const config = { headers: { Authorization: `Bearer ${request}` } }
         axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today`, config)
-        .then((res)=>{
-            setHabitList(res.data)
-            setPercent((res.data.filter((l)=>l.done)).length/res.data.length)
-            console.log(res.data)
-        })
-        .catch((err)=>{
-            console.log(err.response.data)
-        })
-        
-    },[checkedList])
+            .then((res) => {
+                setHabitList(res.data)
+                setPercent(((res.data.filter((l) => l.done)).length / res.data.length).toFixed(2))
+                console.log(res.data)
+            })
+            .catch((err) => {
+                console.log(err.response.data)
+            })
+
+    }, [checkedList, atualization])
     return (
         <>
             <TopBar />
             <Container>
-                <Day habitList={habitList}/>
-                {habitList.map((o)=>
-                <Tasks key={o.id}
-                setCheckedList={setCheckedList}
-                checkedList={checkedList} 
-                name={o.name} 
-                sequence={o.currentSequence} 
-                record={o.highestSequence} 
-                done={o.done}
-                id={o.id}/>)}
+                <Day habitList={habitList} />
+                {habitList.map((o) =>
+                    <Tasks key={o.id}
+                        setCheckedList={setCheckedList}
+                        checkedList={checkedList}
+                        o={o} />)}
             </Container>
-            <BottonBar/>
+            <BottonBar />
         </>
     )
 }

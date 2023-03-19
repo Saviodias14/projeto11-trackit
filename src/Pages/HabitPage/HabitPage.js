@@ -1,16 +1,14 @@
-import { useState } from "react"
 import styled from "styled-components"
 import BottonBar from "../../components/BottonBar"
 import TopBar from "../../components/TopBar"
 import AddNewHabit from "./AddNewHabit"
 import Habits from "./Habits"
 export default function HabitPage() {
-    const [atualization, setAtualization] = useState([])
     return (
         <Container>
             <TopBar />
-            <AddNewHabit setAtualization={setAtualization} atualization={atualization}/>
-            <Habits setAtualization={setAtualization} atualization={atualization} />
+            <AddNewHabit/>
+            <Habits/>
             <BottonBar />
         </Container>
     )

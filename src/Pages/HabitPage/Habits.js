@@ -4,9 +4,11 @@ import dayList from '../../constants/dayList.js'
 import trash from '../../assets/trash-outline.svg'
 import axios from "axios"
 import token from "../../constants/token.js"
-export default function Habits({atualization, setAtualization}) {
+import att from "../../constants/atualization.js"
+export default function Habits() {
     const [myHabits, setMyHabits] = useState([])
     const [request, setRequest] = useContext(token)
+    const [atualization, setAtualization] = useContext(att)
     const config = { headers: { Authorization: `Bearer ${request}` } }
     console.log(myHabits)
     useEffect(() => {
@@ -36,12 +38,12 @@ export default function Habits({atualization, setAtualization}) {
     return (
         <Container>
             {myHabits.map((h) =>
-                <Habit>
-                    <h1>{h.name}</h1>
+                <Habit data-test='habit-container' key={h.id}>
+                    <h1 data-test='habit-name'>{h.name}</h1>
                     <DayList>
                         {dayList.map((d, i) => <ButtonDay key={i} clicked={h.days.includes(i)} data-test='habit-day' type='button'>{d}</ButtonDay>)}
                     </DayList>
-                    <img src={trash} onClick={()=>erase(h.id)} />
+                    <img data-test='habit-delete-btn' src={trash} onClick={()=>window.confirm('Deseja apagar esse hábito?')?erase(h.id):''}/>
                 </Habit>)}
         </Container>
     )

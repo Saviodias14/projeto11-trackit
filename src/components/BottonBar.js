@@ -5,10 +5,11 @@ import styled from 'styled-components';
 import percentual from '../constants/percent';
 export default function BottonBar() {
     const [percent, usePercent] = useContext(percentual)
+    console.log(percent)
     return (
         <div data-test='menu'>
             <ProgressContent data-test='today-link'>
-                <CircularProgressbarWithChildren value={percent*100} background={true} backgroundPadding={7} strokeWidth={9} styles={{
+                <CircularProgressbarWithChildren value={percent?percent*100:0} background={true} backgroundPadding={7} strokeWidth={9} styles={{
                     path: {
                         stroke: `white`,
                         strokeLinecap: 'round',

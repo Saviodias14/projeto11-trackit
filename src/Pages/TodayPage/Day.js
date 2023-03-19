@@ -4,7 +4,7 @@ import 'dayjs/locale/pt-br.js'
 import { useContext, useState } from "react"
 import percentual from "../../constants/percent"
 
-export default function Day() {
+export default function Day({habitList}) {
     const [percent, usePercent] = useContext(percentual)
     const [weekDay, setWeekDay] = useState(dayjs().locale('pt-br').format('dddd, DD/MM'))
 
@@ -16,7 +16,7 @@ export default function Day() {
     return (
         <Container percent={percent}>
             <h1 data-test='today'>{weekDay[0].toUpperCase() + weekDay.substring(1)}</h1>
-            <h2 data-test='today-counter'>{percent<=0?'Nenhum hábito concluído ainda':`${percent*100}% dos hábitos concluídos`}</h2>
+            <h2 data-test='today-counter'>{habitList.length<1?'Nenhum hábito concluído ainda':`${percent*100}% dos hábitos concluídos`}</h2>
         </Container>
     )
 }

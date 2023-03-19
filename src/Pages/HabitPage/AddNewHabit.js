@@ -4,10 +4,11 @@ import dayList from '../../constants/dayList.js'
 import { useState, useContext } from "react"
 import { ThreeDots } from 'react-loader-spinner'
 import axios from "axios"
-import url from "../../constants/url"
 import token from "../../constants/token"
-export default function AddNewHabit({ setAtualization, atualization }) {
+import att from '../../constants/atualization.js'
+export default function AddNewHabit() {
     const [request, setRequest] = useContext(token)
+    const [atualization, setAtualization] = useContext(att)
     const [showAddHabit, setShowAddHabit] = useState(false)
     const [disabled, setDisabled] = useState(false)
     const [name, setName] = useState('')
@@ -25,7 +26,7 @@ export default function AddNewHabit({ setAtualization, atualization }) {
 
     function handleForm(e) {
         e.preventDefault()
-        if (days.length>0) {
+        if (days.length>0 && name) {
             setDisabled(true)
             const config = { headers: { Authorization: `Bearer ${request}` } }
             const body = { name, days }
@@ -44,7 +45,7 @@ export default function AddNewHabit({ setAtualization, atualization }) {
                     setDisabled(false)
                 })
         }else{
-            alert('Selecione algum dia da semana')
+            alert('Você deve preencher todos os campos!')
         }
     }
     return (
@@ -60,22 +61,20 @@ export default function AddNewHabit({ setAtualization, atualization }) {
                         placeholder="nome do habito"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        disabled={disabled}
-                        required />
+                        disabled={disabled}/>
                     <DayList>
                         {dayList.map((d, i) => <ButtonDay
                             key={i}
                             data-test='habit-day'
                             clicked={days.includes(i)}
                             onClick={() => clickedDay(i)}
+                            disabled={disabled}
                             type='button'
                         >{d}</ButtonDay>)}
                     </DayList>
                     <Send>
                         <button data-test='habit-create-cancel-btn' type='button' onClick={() => {
                             setShowAddHabit(false)
-                            setDays([])
-                            setName('')
                         }} disabled={disabled}>Cancelar</button>
                         <button data-test='habit-create-save-btn' type='submit' disabled={disabled}>{disabled ? <ThreeDots
                             height="80"

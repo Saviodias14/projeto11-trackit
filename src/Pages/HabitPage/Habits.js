@@ -5,19 +5,24 @@ import trash from '../../assets/trash-outline.svg'
 import axios from "axios"
 import token from "../../constants/token.js"
 import att from "../../constants/atualization.js"
+import percentual from "../../constants/percent.js"
 export default function Habits() {
     const [myHabits, setMyHabits] = useState([])
     const [request, setRequest] = useContext(token)
     const [atualization, setAtualization] = useContext(att)
+    const [percent, setPercent] = useContext(percentual)
     const config = { headers: { Authorization: `Bearer ${request}` } }
     console.log(myHabits)
     useEffect(() => {
+        axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today`, config)
+            .then((res) => {
+                setPercent(res.data.length?(((res.data.filter((l) => l.done)).length)/res.data.length).toFixed(2):0)
+            })
         axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', config)
             .then((res) => {
                 console.log(res.data)
                 setMyHabits(res.data)
-                setAtualization(res.data)
-            })
+                })
             .catch((err) => alert(err.response.data))
     }, [atualization])
 
@@ -26,6 +31,7 @@ export default function Habits() {
         .then((res)=>{
             console.log(res)
             const array = atualization.filter((e)=>e.id!==id)
+            console.log(array)
             setAtualization(array)
         })
     }

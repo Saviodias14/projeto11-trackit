@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import percentual from '../constants/percent';
 export default function BottonBar() {
     const [percent, usePercent] = useContext(percentual)
-    console.log(percent)
     return (
         <div data-test='menu'>
             <ProgressContent data-test='today-link'>

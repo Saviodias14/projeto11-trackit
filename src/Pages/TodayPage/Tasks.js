@@ -5,20 +5,17 @@ import token from '../../constants/token'
 import axios from 'axios'
 import percentual from '../../constants/percent'
 
-export default function Tasks({ o, setCheckedList, checkedList, setDoneTasks, doneTasks}) {
+export default function Tasks({ o, setCheckedList, checkedList}) {
     const [request, setRequest] = useContext(token)
-    const [percent, setPercent] = useContext(percentual)
     const config = { headers: { Authorization: `Bearer ${request}` } }
     
     function checkTask() {
         if (o.done) {
-            setDoneTasks(doneTasks-1)
             axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${o.id}/uncheck`, '', config)
                 .then((res) => {
                     checkedList ? setCheckedList(false) : setCheckedList(true)
                 })
         } else {
-            setDoneTasks(doneTasks+1)
             axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${o.id}/check`, '', config)
                 .then((res) => {
                     checkedList ? setCheckedList(false) : setCheckedList(true)
@@ -32,7 +29,7 @@ export default function Tasks({ o, setCheckedList, checkedList, setDoneTasks, do
             record={o.highestSequence}>
             <h1 data-test='today-habit-name'>{o.name}</h1>
             <p data-test='today-habit-sequence'>Sequência atual: <span>{o.currentSequence} dias</span></p>
-            <p data-test='today-habit-record'>Seu recorde: {o.highestSequence} dias</p>
+            <p data-test='today-habit-record'>Seu recorde: <span>{o.highestSequence} dias</span></p>
             <div onClick={checkTask} data-test='today-habit-check-btn'>
                 <img src={check} />
             </div>
@@ -82,7 +79,10 @@ div{
     align-items:center;
     justify-content:center;
 }
-span{
-    color:${props => (props.sequence > 0 && props.sequence >= props.record) || props.done ? '#8FC549' : '#666666'};
+span:first-child{
+    color:${props => props.done ? '#8FC549' : '#666666'};
+}
+span:last-child{
+    color:${props => (props.sequence > 0 && props.sequence === props.record)? '#8FC549' : '#666666'};  
 }
 `

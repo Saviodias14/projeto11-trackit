@@ -5,10 +5,10 @@ import token from '../../constants/token'
 import axios from 'axios'
 import percentual from '../../constants/percent'
 
-export default function Tasks({ o, setCheckedList, checkedList}) {
+export default function Tasks({ o, setCheckedList, checkedList }) {
     const [request, setRequest] = useContext(token)
     const config = { headers: { Authorization: `Bearer ${request}` } }
-    
+
     function checkTask() {
         if (o.done) {
             axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${o.id}/uncheck`, '', config)
@@ -29,7 +29,9 @@ export default function Tasks({ o, setCheckedList, checkedList}) {
             record={o.highestSequence}>
             <h1 data-test='today-habit-name'>{o.name}</h1>
             <p data-test='today-habit-sequence'>Sequência atual: <span>{o.currentSequence} dias</span></p>
-            <p data-test='today-habit-record'>Seu recorde: <span>{o.highestSequence} dias</span></p>
+            <p data-test='today-habit-record'>Seu recorde: <Record done={o.done}
+                sequence={o.currentSequence}
+                record={o.highestSequence}>{o.highestSequence} dias</Record></p>
             <div onClick={checkTask} data-test='today-habit-check-btn'>
                 <img src={check} />
             </div>
@@ -82,7 +84,7 @@ div{
 span:first-child{
     color:${props => props.done ? '#8FC549' : '#666666'};
 }
-span:last-child{
-    color:${props => (props.sequence > 0 && props.sequence === props.record && props.done)? '#8FC549' : '#666666'};  
-}
+`
+const Record = styled.span`
+color:${props => (props.sequence > 0 && props.sequence === props.record && props.done) ? '#8FC549' : '#666666'}; 
 `

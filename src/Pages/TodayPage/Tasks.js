@@ -83,6 +83,6 @@ span:first-child{
     color:${props => props.done ? '#8FC549' : '#666666'};
 }
 span:last-child{
-    color:${props => (props.sequence > 0 && props.sequence >= props.record)? '#8FC549' : '#666666'};  
+    color:${props => (props.sequence > 0 && props.sequence >= props.record && props.done)? '#8FC549' : '#666666'};  
 }
 `

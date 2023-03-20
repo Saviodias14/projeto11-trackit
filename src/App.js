@@ -13,7 +13,7 @@ function App() {
   const [request, setRequest] = useState('')
   const [picture, setPicture] = useState('')
   const [percent, setPercent] = useState('')
-  const [atualization, setAtualization] = useState('')
+  const [atualization, setAtualization] = useState(0)
   return (
     <att.Provider value={[atualization, setAtualization]}>
       <percentual.Provider value={[percent, setPercent]}>

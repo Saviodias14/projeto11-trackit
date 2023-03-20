@@ -28,11 +28,9 @@ export default function Habits() {
 
     function erase(id){
         axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config)
-        .then((res)=>{
-            console.log(res)
-            const array = atualization.filter((e)=>e.id!==id)
-            console.log(array)
-            setAtualization(array)
+        .then(()=>{
+            console.log(atualization+1)
+            setAtualization(atualization+1)
         })
     }
     if (myHabits.length<1) {

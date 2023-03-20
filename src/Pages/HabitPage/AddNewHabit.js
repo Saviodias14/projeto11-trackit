@@ -37,12 +37,13 @@ export default function AddNewHabit() {
                     setDays([])
                     setName('')
                     setDisabled(false)
-                    setAtualization([...atualization, res.data])
+                    setAtualization(atualization+1)
                 })
                 .catch((err) => {
-                    alert(err.response.data)
-                    console.log(err.response)
+                    alert(err)
+                    console.log(err)
                     setDisabled(false)
+                    setAtualization(atualization+1)
                 })
         }else{
             alert('Você deve preencher todos os campos!')
